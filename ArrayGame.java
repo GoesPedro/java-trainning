@@ -1,7 +1,6 @@
-package fundamentals;
 import java.util.*;
 
-public class Solution {
+public class ArrayGame {
 
     public static boolean canWin(int leap, int[] game, int i) {
         if (i < 0 || game[i] == 1)
