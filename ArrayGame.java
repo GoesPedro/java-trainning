@@ -1,40 +1,19 @@
 package fundamentals;
 import java.util.*;
 
-public class ArrayGame {
+public class Solution {
 
-    public static boolean canWin(int leap, int[] game) {
-    	// Return true if you can win the game; otherwise, return false.
-    	int j = 0;
-    	int counter = 0;
-    	boolean win = true;
-    	
-    	while (j >= 0 && j < game.length) {
-    		
-    		if (j+leap >= game.length) {
-    			break;
-    		} else if (game[j+leap] == 0) {
-    			j += leap;
-    			continue;
-    		} else if (game[j+1] == 0) {
-    			j++;
-    			continue;
-    		} else if (j-1 > 0 && game[j-1] == 0) {
-    			counter++;
-    			if (counter == leap) {
-    				win = false;
-    				break;
-    			}
-    			j--;
-    			continue;
-    		} else {
-    			win = false;
-    			break;
-    		}
-    	}
-    	
-    	return win;
-    	
+    public static boolean canWin(int leap, int[] game, int i) {
+        if (i < 0 || game[i] == 1)
+            return false;
+        if (i + leap >= game.length || i + 1 >= game.length)
+            return true;
+
+        game[i] = 1; //flag not to come back to this index
+
+        return canWin(leap, game, i + leap)
+                || canWin(leap, game, i + 1)
+                || canWin(leap, game, i - 1);
     }
 
     public static void main(String[] args) {
@@ -49,7 +28,7 @@ public class ArrayGame {
                 game[i] = scan.nextInt();
             }
 
-            System.out.println( (canWin(leap, game)) ? "YES" : "NO" );
+            System.out.println( (canWin(leap, game, 0)) ? "YES" : "NO" );
         }
         scan.close();
     }
